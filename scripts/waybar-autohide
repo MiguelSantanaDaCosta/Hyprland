@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Configurações
+HOVER_AREA=50
+REFRESH_RATE=0.2
+SOCKET="/tmp/waybar-control"
+
+# Cria pipe nomeado se não existir
+[ -p "$SOCKET" ] || mkfifo "$SOCKET"
+
+# Monitora posição do cursor
+hyprctl --batch '[[submap:monitor,cursorMove:1]]' -j | while read -r event; do
+    y_pos=$(echo "$event" | jq '.data.y')
+    
+    if (( y_pos <= HOVER_AREA )); then
+        echo "SHOW" > "$SOCKET"
+    else
+        echo "HIDE" > "$SOCKET"
+    fi
+done &
+PID=$!
+
+# Controle da Waybar
+while read -r cmd; do
+    case "$cmd" in
+        "SHOW") 
+            if ! pgrep -x waybar >/dev/null; then
+                waybar &
+            fi
+            ;;
+        "HIDE")
+            pkill -x waybar
+            ;;
+    esac
+done < "$SOCKET"
+
+# Limpeza
+cleanup() {
+    kill $PID
+    rm -f "$SOCKET"
+}
+trap cleanup EXIT
