@@ -1,0 +1,39 @@
+// config da Waybar baseado no Caelestia com layout tradicional e estilo Akira
+{
+  "layer": "top",
+  "position": "top",
+  "modules-left": ["hyprland/workspaces", "hyprland/window"],
+  "modules-center": ["clock"],
+  "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "tray"],
+
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "on-click": "activate",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1"
+  },
+
+  "clock": {
+    "format": " {:%H:%M}",
+    "tooltip-format": "{:%A, %d de %B de %Y}",
+    "interval": 60
+  },
+
+  "cpu": { "format": " {usage}%" },
+  "memory": { "format": " {used:0.1f}G" },
+  "battery": {
+    "format": " {capacity}%",
+    "format-charging": " {capacity}%"
+  },
+  "network": {
+    "format-wifi": " {essid} ({signalStrength}%)",
+    "format-ethernet": "󰈀 {ipaddr}",
+    "format-disconnected": ""
+  },
+  "pulseaudio": {
+    "format": "{volume}% ",
+    "format-muted": "🔇"
+  },
+  "tray": {}
+}
+

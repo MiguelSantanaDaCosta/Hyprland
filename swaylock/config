@@ -1,0 +1,19 @@
+# swaylock config baseado no Caelestia com toque Akira
+
+ignore-empty-password
+color=00000088
+font=JetBrainsMono Nerd Font
+
+ring-color=ff003c
+inside-color=00000088
+text-color=ffffff
+key-hl-color=00d9ff
+bs-hl-color=ff003c
+separator-color=00000000
+
+show-failed-attempts
+clock
+indicator
+indicator-radius=100
+indicator-thickness=7
+
